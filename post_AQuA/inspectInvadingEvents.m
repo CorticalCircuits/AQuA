@@ -1,14 +1,15 @@
+whicchLandmark = 1;
 
 
 % figure;plot(res.ftsFilter.region.landmarkDir.chgTowardBefReach)
 mnIm = mean(res.datOrg,3);
-somaBorder = res.fts.region.landMark.border{2};
+somaBorder = res.fts.region.landMark.border{whicchLandmark};
 
 thresh = 50;
 % invadingEvents = find(res.ftsFilter.region.landmarkDir.chgTowardBefReach(:,2)>thresh);
-invadingEvents = find(res.ftsFilter.region.landmarkDir.chgToward(:,2)>thresh);
+invadingEvents = find(res.ftsFilter.region.landmarkDir.chgToward(:,whicchLandmark)>thresh);
 
-for whichEvt = 1%1:length(invadingEvents)
+for whichEvt = 3%1:length(invadingEvents)
     temp = zeros(size(res.datOrg));
     temp(res.evt{invadingEvents(whichEvt)}) = 1;
 %     figure

@@ -3,7 +3,7 @@ clear; clc; close all;
 stc = struct;
 
 % Names of the Tiff files to compare
-% NOte: Have to be same amount of frames (i.e. same video)
+% Note: Have to be same amount of frames (i.e. same video)
 stc(1).name = 'TSeries-08312015-EpiOri180deg4on12off-Site2-area2-Ast1-9x-4Hz-ISO0_default';
 stc(2).name = 'TSeries-08312015-EpiOri180deg4on12off-Site2-area2-Ast1-9x-4Hz-ISO0_Propagation4';
 % Make sure files are in MATLAB's path

@@ -1,7 +1,7 @@
 function aqua_gui(res,dbg)
     %AQUA_GUI GUI for AQUA
     
-    startup;
+%     startup;
     
     if ~exist('dbg','var')
         dbg = 0;

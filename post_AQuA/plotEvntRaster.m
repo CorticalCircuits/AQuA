@@ -6,9 +6,9 @@ nBlanks = 2;
 frameRate = res.opts.frameRate;
 framesPerSec = 1/frameRate;
 % framesPerSec = 4;
-
+ 
 evtSizeCutoff = 50; %% could do something more rational, like fitting the distribution, something like this:
-% area2 = area;
+% area2 = area; 
 % area2(area2>150) = 150;
 % h = hist(area2,0:150);
 % figure

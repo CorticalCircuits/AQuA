@@ -27,5 +27,5 @@ bar(X,Y);
 legend(fl); title('Comparison Chart'); xlabel('Event Type');
 
 % Any other parameter relevant to the comparison can be added below the
-% "totalEvents(1,n) line. Make sure the path within the res structure
-% follows the ones above.
+%       "totalEvents(1,n) line. Make sure the path within the res structure
+%       follows the ones above.

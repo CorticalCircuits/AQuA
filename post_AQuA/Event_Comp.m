@@ -10,7 +10,7 @@ fl = cell(1,file_number);
 for n = 1:file_number
     
 [p,name,ext] = fileparts(paths{n});
-addpath(p);
+addpath(p)
 filename = strcat(name,ext);
 
 T(n) = load(filename);  % Data from all trials is stored here
@@ -28,6 +28,8 @@ evadingEvents(1,n) = numel(find(T(n).res.ftsFilter.region.landmarkDir.chgAway(:,
 movingEvents(1,n) = invadingEvents(n) + evadingEvents(n);
 totalEvents(1,n) = numel(T(n).res.ftsFilter.region.landmarkDir.chgAway);
 % Add here any other category
+
+rmpath(p)
 
 end
 X = categorical({ 'Total' , 'Moving' , 'Invading' , 'Evading'});
@@ -51,6 +53,9 @@ counter = 0;
 for j = 1:42
     for k = 1:file_number
         var(1,k) = getfield(T(k).res.opts,fields{j});
+        if j == 37
+            var = round(var,2,'significant');
+        end
     end
     if numel(unique(var)) > 1
         counter = counter + 1;

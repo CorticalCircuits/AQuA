@@ -52,7 +52,7 @@ function saveMsk(~,~,f,op)
         if strcmp(rr0.type,'landmark')
             minLmkSz = min(minLmkSz,rr0.minSz);
             if isempty(lmkMskAll)
-                lmkMskAll = rr0.mask;
+                lmkMskAll = double(rr0.mask);
                 continue
             end
             switch opLmk
@@ -200,11 +200,27 @@ function saveMsk(~,~,f,op)
             %tmp{1} = [xx(:,2),H-xx(:,1)+1];
             tmp{2} = xx;
             tmp{3} = 'auto';
+            tmp{4} = 'None';
             regAll{nNow+1} = tmp;
             nNow = nNow+1;
         end
     end
-    bd('cell') = regAll;
+    
+    % left->right top->bottom
+    regAllS = cell(1,numel(regAll));
+    pos = zeros(1,numel(regAll));
+    for i = 1:numel(regAll)
+        pix = regAll{i}{2};
+        [ih0,iw0] = ind2sub(opts.sz(1:2),pix);
+        ihw = sub2ind([opts.sz(2),opts.sz(1)],iw0,ih0);
+        pos(i) = min(ihw);
+    end
+    [~,num] = sort(pos);
+    for i = 1:numel(regAll)
+        regAllS{i} = regAll{num(i)};
+    end
+    bd('cell') = regAllS;
+    
     
     nNow = numel(lmkAll);
     for ii=1:ccLmk.NumObjects
@@ -215,9 +231,25 @@ function saveMsk(~,~,f,op)
         tmp{1} = bwboundaries(msk);
         tmp{2} = xx;
         tmp{3} = 'auto';
+        tmp{4} = 'None';
         lmkAll{nNow+ii} = tmp;
     end
-    bd('landmk') = lmkAll;
+    
+    % left->right top->bottom
+    lmkAllS = cell(1,numel(lmkAll));
+    pos = zeros(1,numel(lmkAll));
+    for i = 1:numel(lmkAll)
+        pix = lmkAll{i}{2};
+        [ih0,iw0] = ind2sub(opts.sz(1:2),pix);
+        ihw = sub2ind([opts.sz(2),opts.sz(1)],iw0,ih0);
+        pos(i) = min(ihw);
+    end
+    [~,num] = sort(pos);
+    for i = 1:numel(lmkAll)
+        lmkAllS{i} = lmkAll{num(i)};
+    end
+    
+    bd('landmk') = lmkAllS;
     
     setappdata(f,'bd',bd);
 

@@ -19,14 +19,14 @@ filename = string(strsplit(filename,'_'));
 filename = strsplit(filename(2),'.');
 fl(n) = {filename(1)};
 
-if isempty(T(n).res.ftsFilter.region)
-    error('Landmark was not selected during PreProcessing');
+if ~isfield(T(n).res,'fts')
+    error('Landmark was not selected during Pre-Processing');
 end
 
-invadingEvents(1,n) = numel(find(T(n).res.ftsFilter.region.landmarkDir.chgToward(:,1)>thresh));
-evadingEvents(1,n) = numel(find(T(n).res.ftsFilter.region.landmarkDir.chgAway(:,1)>thresh));
+invadingEvents(1,n) = numel(find(T(n).res.fts.region.landmarkDir.chgToward(:,1)>thresh));
+evadingEvents(1,n) = numel(find(T(n).res.fts.region.landmarkDir.chgAway(:,1)>thresh));
 movingEvents(1,n) = invadingEvents(n) + evadingEvents(n);
-totalEvents(1,n) = numel(T(n).res.ftsFilter.region.landmarkDir.chgAway);
+totalEvents(1,n) = numel(T(n).res.fts.region.landmarkDir.chgAway);
 % Add here any other category
 
 rmpath(p)
@@ -64,7 +64,11 @@ for j = 1:42
     end
 end
 
-diff = fields(index);
-Table = table(string(fl'),show,'Variablenames',{'Trial','show'});
-Table = splitvars(Table,'show','NewVariableNames',diff);
-disp(Table);
+if exist('index','var')
+    diff = fields(index);
+    Table = table(string(fl'),show,'Variablenames',{'Trial','show'});
+    Table = splitvars(Table,'show','NewVariableNames',diff);
+    disp(Table);
+else
+    disp('No difference in Parameters was Found');
+end

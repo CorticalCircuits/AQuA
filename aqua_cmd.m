@@ -3,10 +3,19 @@
 startup;  % initialize
 
 preset = 1;
-p0 = 'D:\Bug Folder\';  % folder name
-f0 = 'reg_stk_0002_20190117_4322-000-Ch2.tif';  % file name
-ftb = ['D:\Bug Folder\FeatureTable.xlsx'];      % FeatureTable Path
-fmov = ['D:\Bug Folder\Movie.tif'];             % Movie Path
+p0 = 'D:\';  % folder name
+f0 = 'Test.tif';  % file name
+
+%% save path
+[folder, name, ext] = fileparts(strcat(p0,'\',f0));
+path0 = [p0,name,'\'];
+if ~exist(path0,'dir') && ~isempty(path0)
+    mkdir(path0);    
+end
+
+ftb = [path0,name,'_FeatureTable.xlsx'];       % Movie Path
+fmov = [path0,name,'_Movie.tif'];
+
 
 opts = util.parseParam(preset,1);
 
@@ -71,7 +80,11 @@ end
 %% export table
 fts = ftsLstE;
 tb = readtable('userFeatures.csv','Delimiter',',');
-nEvt = numel(ftsLstE.basic.area);
+if(isempty(ftsLstE.basic))
+    nEvt = 0;
+else
+    nEvt = numel(ftsLstE.basic.area);
+end
 nFt = numel(tb.Name);
 ftsTb = nan(nFt,nEvt);
 ftsName = cell(nFt,1);
@@ -170,7 +183,7 @@ io.writeTiffSeq(fmov,ov1,8);
 
 %% export to GUI
 res = fea.gatherRes(datOrg,opts,evtLstE,ftsLstE,dffMatE,dMatE,riseLstE,datRE);
-aqua_gui(res);
+% aqua_gui(res);
 
 % visualize the results in each step
 if 0
@@ -183,4 +196,5 @@ if 0
     [ov1,lblMapS] = plt.regionMapWithData(evtLstE,datOrg,0.5,datRE); zzshow(ov1);
 end
 
+save([path0,name,'_AQuA.mat'], 'res');
 

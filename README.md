@@ -10,10 +10,12 @@ AQuA (**A**strocyte **Qu**antification and **A**nalysis) is a tool to detect eve
   - [Graphical user interface](#graphical-user-interface)
 - [Download and installation](#download-and-installation)
   - [MATLAB GUI](#matlab-gui)
+  - [MATLAB Without GUI](#matlab-without-gui)
   - [Fiji plugin](#fiji-plugin)
 - [Getting started](#getting-started)
 - [Example datasets](#example-datasets)
 - [Reference](#reference)
+- [Updates](#updates)
 
 # More about AQuA
 ## From raw data to events
@@ -53,6 +55,19 @@ AQuA (**A**strocyte **Qu**antification and **A**nalysis) is a tool to detect eve
 
 We tested on MATLAB versions later than 2017a. Earlier versions are not supported.
 
+## MATLAB Without GUI
+### Use aqua_cmd.m file
+1. Double click `aqua_cmd.m` file.
+2. Set the folder path 'p0' and target dataset name 'f0'.
+3. Run the file.
+4. The output files will be saved in a subfolder of 'p0'.
+
+### Use aqua_batch.m file
+1. Double click `aqua_batch.m` file.
+2. Set the folder path 'p0', and for each target dataset, set the parameters in `AQuA/cfg/parameters_for_batch.csv`. Each dataset is corresponding to one parameter setting.
+3. Run the file.
+4. The output files will be saved in subfolders of 'p0'.
+
 ## Fiji plugin
 
 1. Download **[here](https://github.com/yu-lab-vt/AQuA-Fiji/releases)**.
@@ -88,4 +103,13 @@ We also provide some synthetic data sets. These are used in the simulation part 
 Yizhi Wang, Nicole V. DelRosso, Trisha Vaidyanathan, Michael Reitman, Michelle K. Cahill, Xuelong Mi, Guoqiang Yu, Kira E. Poskanzer, *An event-based paradigm for analyzing fluorescent astrocyte activity uncovers novel single-cell and population-level physiology*, BioRxiv 504217; doi: https://doi.org/10.1101/504217. [[Link to BioRxiv]](https://www.biorxiv.org/content/early/2018/12/21/504217)
 
 
+# Updates
+**10/17/2019:** 
 
+1) The update avoid the error report when nothing detected for `aqua_batch.m`. 
+
+2) Let `aqua_batch.m` could read cell boundaries and landmarks.
+
+**10/16/2019:** 
+
+The update adds the new script `aqua_batch.m` which can let users deal with multiple files. **[MATLAB Without GUI](#matlab-without-gui)** shows how to use it.  

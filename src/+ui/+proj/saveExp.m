@@ -20,7 +20,7 @@ ff = waitbar(0,'Gathering results ...');
 % if do not want to detect again, do not need to save dF
 vSave0 = {...  % basic variables for results analysis
     'opts','scl','btSt','ov','bd','datOrg','evt','fts','dffMat','dMat',...
-    'riseLst','featureTable','userFeatures'...
+    'riseLst','featureTable','userFeatures','dF',...
     };
 % vSave1 = {...  % extra variables for event detection
 %     'arLst','lmLoc','svLst','seLstAll','riseX','riseLstAll','evtLstAll','ftsLstAll',...
@@ -72,23 +72,25 @@ end
 fh = guidata(f);
 opts = getappdata(f,'opts');
 
-waitbar(0.25,ff,'Saving ...');
+
 btSt = getappdata(f,'btSt');
 favEvtLst = btSt.evtMngrMsk;
 fout = [path0,filesep,file0];
 [fpath,fname,ext] = fileparts(fout);
 
 if fh.expEvt.Value==1
+    waitbar(0.25,ff,'Saving res file...');
     if isempty(ext)
         fout = [fout,'.mat'];
     end
     save(fout,'res','-v7.3');
 end
 
-waitbar(0.5,ff,'Writing movie ...');
+
 
 % export movie
 if fh.expMov.Value==1
+    waitbar(0.5,ff,'Writing movie ...');
     ov1 = zeros(opts.sz(1),opts.sz(2),3,opts.sz(3));
     for tt=1:opts.sz(3)
         if mod(tt,100)==0
@@ -102,6 +104,7 @@ if fh.expMov.Value==1
 end
 
 if fh.expEvt.Value==1
+    waitbar(0.75,ff,'Writing feature table ...');
     % export feature table
     ftTb = getappdata(f,'featureTable');
     if isempty(ftTb)
@@ -116,14 +119,30 @@ if fh.expEvt.Value==1
     ftb = [fpath,filesep,fname,'.xlsx'];
     writetable(ftTb1,ftb,'WriteVariableNames',0,'WriteRowNames',1);
 
+    
+    bd = getappdata(f,'bd');
+    
     % for each region
     if ~isempty(fts.region) && isfield(fts.region.cell,'memberIdx') && ~isempty(fts.region.cell.memberIdx)
+        bdcell = bd('cell');
+        fpathRegion = [fpath,'\Regions'];
+        if ~exist(fpathRegion,'file') && ~isempty(fpathRegion)
+            mkdir(fpathRegion);    
+        end
+
         memSel = fts.region.cell.memberIdx(xSel,:);
         for ii=1:size(memSel,2)
             mem00 = memSel(:,ii);
+            Name = 'None';
+            if numel(bdcell{ii})>=4
+                Name = bdcell{ii}{4};
+            end
+            if strcmp(Name,'None')
+               Name = num2str(ii); 
+            end
             cc00 = cc(:,mem00>0);
             ftTb00 = table(cc00,'RowNames',ftTb.Row);
-            ftb00 = [fpath,filesep,fname,'_region_',num2str(ii),'.xlsx'];
+            ftb00 = [fpathRegion,filesep,fname,'_region_',Name,'.xlsx'];
             writetable(ftTb00,ftb00,'WriteVariableNames',0,'WriteRowNames',1);
         end
     end

@@ -1,17 +1,17 @@
 %clear; clc; close all;
 
-filename = 'Propagation_1_4'; % Choose the name of the file to be saved
+filename = 'Poster'; % Choose the name of the file to be saved
 saving_option = 0; % Choose saving option 1 to save the .mat file
 stc = struct;
 % p = ['E:\AQuA\Output\TSeries-07062015-1048_EpOri(12sec)_site1_9X_4Hz_Astro1_0.8ISO_v3-000_ALGoodTrials'];
-p = ['C:\Users\schummersj\Documents\GitHub\AQuA\post_AQuA\savefn\'];
+p = ['C:\Users\tomsu\Documents\GitHub\AQuA Data\AQuA Processed\dataSnip27\'];
 
 % Names of the Tiff files to compare
 % Note: Have to be same amount of frames (i.e. same video)
 % stc(1).name = 'TSeries-07062015-1048_EpOri(12sec)_site1_9X_4Hz_Astro1_0.8ISO_v3-000_ALGoodTrialssmooth1_AQuA';
 % stc(2).name = 'TSeries-07062015-1048_EpOri(12sec)_site1_9X_4Hz_Astro1_0.8ISO_v3-000_ALGoodTrialssmooth4_AQuA';
-stc(1).name = 'savefnsmooth1b_AQuA';
-stc(2).name = 'savefnsmooth4b_AQuA';
+stc(1).name = 'dataSnip27_Propagation1';
+stc(2).name = 'dataSnip27_Propagation3';
 % Make sure files are in MATLAB's path
 
 for j=1:2

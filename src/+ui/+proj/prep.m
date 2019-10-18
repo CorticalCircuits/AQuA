@@ -47,6 +47,7 @@ if op==0
     try
         pf0 = fh.fIn.String;
         [filepath,name,ext] = fileparts(pf0);
+        f.Name = ['AQUA: ',name];
         [datOrg,opts] = burst.prep1(filepath,[name,ext],[],opts,ff);
         %cfg0.file = pf0;  % save folder
         %save(cfgFile,'cfg0');
@@ -57,6 +58,7 @@ if op==0
     
     maxPro = max(datOrg,[],3);
     fh.maxPro = maxPro;
+    fh.averPro = mean(datOrg,3);
     fh.showcurves = [];
     guidata(f,fh);
     
@@ -112,7 +114,11 @@ if op>0
     waitbar(0.5,ff);
     
     if ~isfield(res,'scl')
+        if isfield(res,'bd')
+            [~,~,res.scl,res.btSt] = ui.proj.prepInitUIStruct(res.datOrg,res.opts);
+        else
         [~,res.bd,res.scl,res.btSt] = ui.proj.prepInitUIStruct(res.datOrg,res.opts);
+        end
         res.stg = [];
         res.stg.detect = 1;
         res.stg.post = 1;
@@ -129,7 +135,8 @@ if op>0
     scl = res.scl;
     stg = res.stg;
     ov = res.ov;
-    
+    fh.nEvt.String = num2str(numel(res.evt));
+    f.Name = ['AQUA: ',opts.fileName];
     res.btSt.sbs = 0;
     
     fns = fieldnames(res);

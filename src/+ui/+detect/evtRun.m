@@ -9,6 +9,7 @@ ff = waitbar(0,'Detecting ...');
 svLst = getappdata(f,'svLst');
 riseX = getappdata(f,'riseX');
 dat = getappdata(f,'dat');
+bd = getappdata(f,'bd');
 dF = getappdata(f,'dF');
 opts = getappdata(f,'opts');
 
@@ -36,7 +37,7 @@ if isfield(opts,'skipSteps') && opts.skipSteps>0
         riseLst{i} = rr;
     end
 else
-    [riseLst,datR,evtLst,seLst] = burst.evtTop(dat,dF,svLst,riseX,opts,ff);
+    [riseLst,datR,evtLst,seLst] = burst.evtTop(dat,dF,svLst,riseX,opts,ff,bd,f);
 end
 
 [ftsLst,dffMat] = fea.getFeatureQuick(dat,evtLst,opts);
@@ -51,6 +52,7 @@ setappdata(f,'datRAll',datR);
 ui.detect.postRun([],[],f,seLst,datR,'Step 3a: super events');
 ui.detect.postRun([],[],f,evtLst,datR,'Step 3b: events all');
 
+fh.nEvtName.String = 'nEvt';
 fh.nEvt.String = num2str(numel(evtLst));
 fprintf('Done\n')
 delete(ff);

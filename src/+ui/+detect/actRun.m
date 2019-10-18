@@ -51,8 +51,12 @@ setappdata(f,'opts',opts);
 
 ui.detect.postRun([],[],f,arLst,[],'Step 1: active voxels');
 fh.GaussFilter.Enable = 'on';
+
+
+fh.nEvtName.String = 'nSeed';
+fh.nEvt.String = num2str(numel(lmLoc));
 delete(ff);
-fprintf('Done\n')
+fprintf('Done\n');
 
 end
 

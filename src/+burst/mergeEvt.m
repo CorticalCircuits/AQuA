@@ -13,7 +13,7 @@ function evtLstOut = mergeEvt(evtLst,dffMat,tBegin,opts,bd)
     mIn = zeros(sz,'uint32');
     evtCellLabel = zeros(numel(evtLst),1);
     
-    if ~isempty(bd) && bd.isKey('cell')
+    if exist('bd')==1 && ~isempty(bd) && bd.isKey('cell')
         bd0 = bd('cell');
         bdMap = zeros(sz(1)*sz(2),1);
         for ii=1:numel(bd0)
@@ -28,6 +28,10 @@ function evtLstOut = mergeEvt(evtLst,dffMat,tBegin,opts,bd)
     end
     
     for ii=1:numel(evtLst)
+        if(numel(evtLst{ii})==0)
+            evtCellLabel(ii) = 0;
+            continue;
+        end
         mIn(evtLst{ii}) = ii;
         [ih,iw,it] = ind2sub(sz,evtLst{ii}(1));
         evtCellLabel(ii) = bdMap(ih,iw);

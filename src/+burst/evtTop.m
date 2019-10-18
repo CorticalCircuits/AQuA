@@ -1,4 +1,4 @@
-function [riseLst,datR,evtLst,seLst] = evtTop(dat,dF,svLst,riseX,opts,ff)
+function [riseLst,datR,evtLst,seLst] = evtTop(dat,dF,svLst,riseX,opts,ff,bd,f)
     % evtTop super voxels to super events and optionally, to events
     
     [H,W,T] = size(dat);
@@ -7,6 +7,10 @@ function [riseLst,datR,evtLst,seLst] = evtTop(dat,dF,svLst,riseX,opts,ff)
         gaptxx = opts.gapExt;  % 5 by default
     else
         gaptxx = 50;
+    end
+    
+    if(exist('f'))
+       fh = guidata(f); 
     end
     
     lblMapS = zeros(size(dat),'uint32');
@@ -41,8 +45,26 @@ function [riseLst,datR,evtLst,seLst] = evtTop(dat,dF,svLst,riseX,opts,ff)
         seMap = burst.sp2evtStp1(lblMapS,xx,0,stp11,0.2,dat);
     end
     
+    % seperate events in different region
+    if exist('bd')==1 && ~isempty(bd)
+        seMap = burst.seperateEvents(seMap,bd);
+    end
+    
     seLst = label2idx(seMap);
-    if exist('ff','var')
+    % filter small super events
+    size2d = zeros(numel(seLst),1);
+    for i = 1:numel(seLst)
+        [ih,iw,it] = ind2sub([H,W,T],seLst{i});
+        size2d(i) = numel(unique(sub2ind([H,W],ih,iw)));
+    end
+    filter = size2d>opts.minSize;
+    seLst = seLst(filter);
+    % update seMap
+    seMap = zeros([H,W,T]);
+    for i = 1:numel(seLst)
+        seMap(seLst{i}) = i;
+    end
+    if exist('ff','var') && ~isempty(ff)
         waitbar(0.2,ff);
     end
     
@@ -58,7 +80,7 @@ function [riseLst,datR,evtLst,seLst] = evtTop(dat,dF,svLst,riseX,opts,ff)
             continue
         end
         fprintf('SE %d \n',nn)
-        if exist('ff','var')
+        if exist('ff','var')&& ~isempty(ff)
             waitbar(0.2+nn/numel(seLst)*0.55,ff);
         end
         
@@ -87,6 +109,12 @@ function [riseLst,datR,evtLst,seLst] = evtTop(dat,dF,svLst,riseX,opts,ff)
         datL(rgh,rgw,rgtx) = evtL;
         riseLst = burst.addToRisingMap(riseLst,evtMap,dlyMap,nEvt,nEvt0,rgh,rgw,rgt,rgtSel);
         nEvt = nEvt + nEvt0;
+        
+        if(exist('f'))
+           fh.nEvt.String = nEvt;
+        end
+        
+        
         %     if nEvt>=223
         %         keyboard
         %     end
@@ -94,10 +122,24 @@ function [riseLst,datR,evtLst,seLst] = evtTop(dat,dF,svLst,riseX,opts,ff)
     
     evtLst = label2idx(datL);
     
+    % filter small events
+    size2d = zeros(numel(evtLst),1);
+    for i = 1:numel(evtLst)
+        [ih,iw,it] = ind2sub([H,W,T],evtLst{i});
+        size2d(i) = numel(unique(sub2ind([H,W],ih,iw)));
+    end
+    filter = size2d>opts.minSize;
+    evtLst = evtLst(filter);
+    riseLst = riseLst(filter);
+    
+    if(exist('f'))
+       fh.nEvt.String = numel(evtLst);
+    end
+    
     % ov1 = plt.regionMapWithData(spLst,zeros(H,W),0.3); zzshow(ov1);
     % ov2 = plt.regionMapWithData(evtMap0,evtMap0*0,0.5); zzshow(ov2);
     
-    if exist('ff','var')
+    if exist('ff','var') && ~isempty(ff)
         waitbar(0.8,ff);
     end
     

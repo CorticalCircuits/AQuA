@@ -21,6 +21,10 @@ function datxCol = movStep(f,n,ovOnly,updtAll)
     scl = getappdata(f,'scl');
     btSt = getappdata(f,'btSt');
     
+    if ~isfield(fh,'maxPro')
+        fh.maxPro = max(dat,[],3);
+    end
+    
     if ~exist('ovOnly','var') || isempty(ovOnly)
         ovOnly = 0;
     end
@@ -33,7 +37,7 @@ function datxCol = movStep(f,n,ovOnly,updtAll)
     
     % re-scale movie
     dat0 = dat(:,:,n);
-    dF0 = dF(:,:,n);
+    dF0 = dF(:,:,n)/max(dF(:));
     if scl.map==1
         dat0 = dat0.^2;
     end

@@ -23,6 +23,10 @@ function addCon_wkfl(f,pWkfl)
     'Callback',{@ui.mov.updtCursorFunMov,f,'rm','cell'});
     uicontrol(gDraw,'String','-','Tag','RmLm',...
     'Callback',{@ui.mov.updtCursorFunMov,f,'rm','landmk'});
+    uicontrol(gDraw,'String','->','Tag','DragCell','Callback',...
+        {@ui.mov.updtCursorFunMov,f,'drag','cell'},'Interruptible','off','BusyAction','cancel');
+    uicontrol(gDraw,'String','->','Tag','DragLm','Callback',...
+        {@ui.mov.updtCursorFunMov,f,'drag','landmk'},'Interruptible','off','BusyAction','cancel');
     uicontrol(gDraw,'String','Name','Tag','NameCell',...
     'Callback',{@ui.mov.updtCursorFunMov,f,'name','cell'});
     uicontrol(gDraw,'String','Name','Tag','NameLm',...
@@ -35,7 +39,7 @@ function addCon_wkfl(f,pWkfl)
     'Callback',{@ui.mov.regionSL,f,'load','cell'});
     uicontrol(gDraw,'String','Load',...
     'Callback',{@ui.mov.regionSL,f,'load','landmk'});
-    gDraw.Widths = [-1,20,20,50,40,40];
+    gDraw.Widths = [-1,20,20,20,50,40,40];
     gDraw.Heights = [20,20];
     bDrawBt = uix.HButtonBox('Parent',bDraw,'Spacing',10,'ButtonSize',[120,20]);
     uicontrol(bDrawBt,'String','Draw anterior','Tag','drawNorth','Callback',...
@@ -43,7 +47,7 @@ function addCon_wkfl(f,pWkfl)
     uicontrol(bDrawBt,'String','Mask builder',...
         'Callback',{@ui.msk.mskBuilderOpen,f},'Enable','on');
     uicontrol(bDrawBt,'String','Update features','Tag','updtFeature1',...
-        'Callback',{@ui.detect.updtFeature,f,1},'Enable','off');
+        'Callback',{@ui.detect.updtFeature,f,0},'Enable','off');
     uix.Empty('Parent',bDraw);
     bDraw.Heights = [-1,20,5];
     
@@ -68,9 +72,12 @@ function addCon_wkfl(f,pWkfl)
     
     % exporting ----
     bExp = uix.VBox('Parent',pExport,'Spacing',5,'Padding',5);
+    
+    EvtFt = uix.HBox('Parent',bExp,'Spacing',5);
     % uicontrol(bExp,'Style','checkbox','String','Filtered events','Value',1,'Tag','expEvtFlt');
     % uicontrol(bExp,'Style','checkbox','String','Selected events','Value',1,'Tag','expEvtMngr');
-    uicontrol(bExp,'Style','checkbox','String','Events and features','Value',1,'Tag','expEvt');
+    uicontrol(EvtFt,'Style','checkbox','String','Events','Value',1,'Tag','expEvt');
+    uicontrol(EvtFt,'Style','checkbox','String','Feature Table','Value',1,'Tag','expFt');
     % uicontrol(bExp,'Style','checkbox','String','Tables and maps','Value',1,'Tag','expTab');
     uicontrol(bExp,'Style','checkbox','String','Movie with overlay','Value',1,'Tag','expMov');
     % uicontrol(bExp,'Style','checkbox','String','Features','Tag','expFea');

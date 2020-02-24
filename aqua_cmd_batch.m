@@ -12,12 +12,14 @@
 close all
 clearvars
 startup;  % initialize
+load('random_Seed.mat');
+rng(s);
 
-p0 = 'C:\Users\tomsu\Documents\GitHub\AQuA Data\BatchTest'; %% tif folder
+p0 = 'D:\'; %% tif folder
 
 %% For cell boundary and landmark
-p_cell = 'TSeries-07062015-1048_EpOri(12sec)_site1_9X_4Hz_Astro1_0.8ISO_v3-000_ALGoodTrials_Cell.mat';   % cell boundary path, if you have
-p_landmark = 'TSeries-07062015-1048_EpOri(12sec)_site1_9X_4Hz_Astro1_0.8ISO_v3-000_ALGoodTrialsLandMark.mat';   % landmark path, if you have
+p_cell = '';   % cell boundary path, if you have
+p_landmark = '';   % landmark path, if you have
 
 bd = containers.Map;
 bd('None') = [];
@@ -60,7 +62,7 @@ for x = 1:size(files,1)
     [svLst,~,riseX] = burst.spTop(dat,dF,lmLoc,evtSpatialMask,opts);  % super voxel detection
 
     [riseLst,datR,evtLst,seLst] = burst.evtTop(dat,dF,svLst,riseX,opts,[],bd);  % events
-    [ftsLst,dffMat] = fea.getFeatureQuick(datOrg,evtLst,opts);
+    [ftsLst,dffMat] = fea.getFeatureQuick(dat,evtLst,opts);
 
     % filter by significance level
     mskx = ftsLst.curve.dffMaxZ>opts.zThr;
@@ -70,7 +72,11 @@ for x = 1:size(files,1)
     riseLstFilterZ = riseLst(mskx);
 
     % merging (glutamate)
-    evtLstMerge = burst.mergeEvt(evtLstFilterZ,dffMatFilterZ,tBeginFilterZ,opts,bd);
+    if opts.ignoreMerge==0
+        evtLstMerge = burst.mergeEvt(evtLstFilterZ,dffMatFilterZ,tBeginFilterZ,opts,bd);
+    else
+        evtLstMerge = evtLstFilterZ;
+    end
 
     % reconstruction (glutamate)
     if opts.extendSV==0 || opts.ignoreMerge==0 || opts.extendEvtRe>0

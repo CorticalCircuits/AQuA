@@ -1,6 +1,8 @@
 %% setup
 % -- preset 1: in vivo. 2: ex vivo. 3: GluSnFR
 startup;  % initialize
+load('random_Seed');
+rng(s);
 
 preset = 1;
 p0 = 'D:\';  % folder name
@@ -43,7 +45,7 @@ opts = util.parseParam(preset,1);
 [svLst,~,riseX] = burst.spTop(dat,dF,lmLoc,[],opts);  % super voxel detection
 
 [riseLst,datR,evtLst,seLst] = burst.evtTop(dat,dF,svLst,riseX,opts);  % events
-[ftsLst,dffMat] = fea.getFeatureQuick(datOrg,evtLst,opts);
+[ftsLst,dffMat] = fea.getFeatureQuick(dat,evtLst,opts);
 
 % fitler by significance level
 mskx = ftsLst.curve.dffMaxZ>opts.zThr;
@@ -53,7 +55,11 @@ tBeginFilterZ = ftsLst.curve.tBegin(mskx);
 riseLstFilterZ = riseLst(mskx);
 
 % merging (glutamate)
-evtLstMerge = burst.mergeEvt(evtLstFilterZ,dffMatFilterZ,tBeginFilterZ,opts,[]);
+if opts.ignoreMerge==0
+    evtLstMerge = burst.mergeEvt(evtLstFilterZ,dffMatFilterZ,tBeginFilterZ,opts,[]);
+else
+    evtLstMerge = evtLstFilterZ;
+end
 
 % reconstruction (glutamate)
 if opts.extendSV==0 || opts.ignoreMerge==0 || opts.extendEvtRe>0

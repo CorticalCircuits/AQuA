@@ -40,17 +40,27 @@ end
 ov = getappdata(f,'ov');
 ov0 = ov('Events');
 xSel = ov0.sel;
+btSt = getappdata(f,'btSt');
+% xSel = ov0.sel;
+xSelFav = false(numel(res.evt),1);
+xSelFav(btSt.evtMngrMsk) = true;
 
 res.ftsFilter = util.filterFields(fts,xSel);
+res.ftsFav = util.filterFields(fts,xSelFav);
 res.evtFilter = res.evt(xSel);
+res.evtFav = res.evt(xSelFav);
 res.dffMatFilter = res.dffMat(xSel,:,:);
+res.dffMatFav = res.dffMat(xSelFav,:,:);
 if ~isempty(res.dMat)
     res.dMatFilter = res.dMat(xSel,:,:);
+     res.dMatFav = res.dMat(xSelFav,:,:);
 end
 if ~isempty(res.riseLst)  % rising map is for super events
     res.riseLstFilter = res.riseLst(xSel);
+    res.riseLstFav = res.riseLst(xSelFav);
 end
 res.evtSelectedList = find(xSel>0);
+res.evtFavList = find(xSelFav>0);
 
 % save raw movie with 8 or 16 bits to save space
 res.opts.bitNum = 16;
@@ -73,7 +83,7 @@ fh = guidata(f);
 opts = getappdata(f,'opts');
 
 
-btSt = getappdata(f,'btSt');
+% btSt = getappdata(f,'btSt');
 favEvtLst = btSt.evtMngrMsk;
 fout = [path0,filesep,file0];
 [fpath,fname,ext] = fileparts(fout);
@@ -103,7 +113,7 @@ if fh.expMov.Value==1
     io.writeTiffSeq(fmov,ov1,8);
 end
 
-if fh.expEvt.Value==1
+if fh.expFt.Value==1
     waitbar(0.75,ff,'Writing feature table ...');
     % export feature table
     ftTb = getappdata(f,'featureTable');

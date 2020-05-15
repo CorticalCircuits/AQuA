@@ -1,24 +1,30 @@
-close all
-% Add res structure before running
+function line = SizeThr(res,opt) 
+%opt = 1 -> Graph Data
+%opt = 2 -> Do not Graph
+
 if ~exist('res','var')
     error('No fie loaded');
 end
 
 Area = res.fts.basic.area;
-[Freq , height] = hist(Area);
+[height , Freq] = histcounts(Area);
+Freq = Freq(1:(end-1));
 
-f = fit(Freq' , height' , 'exp1');
+[f , r] = fit(Freq' , height' , 'exp1');
 g = @(x) f(x);
-syms k(x)
-k(x) = str2sym(Sm(f));
-dfun = matlabFunction(diff(k)+0.0001);
+% x = sym('x');
+k = str2sym(Sm(f));
+dfun = matlabFunction(diff(k)+1);
 line = fzero(dfun , 1);
-
-hold on
-fplot(g , [0 max(Area)]);
-histogram(Area);
-xline(line);
-hold off
+if opt == 1
+    figure
+    hold on
+    histogram(Area);
+    plot(Freq , f(Freq), 'r','LineWidth',2.5);
+    xline(line);
+    hold off
+    fprintf('The Rsq Value is:  %f \n',r.rsquare);
+end
 
 
 function eq = Sm(cf)
@@ -35,4 +41,6 @@ for idx = 1:numel(parameters)
           loc = regexp(eq, param);
       end
 end
+end
+
 end

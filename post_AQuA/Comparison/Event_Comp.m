@@ -7,13 +7,20 @@ file_number = numel(paths);
 thresh = 50;            % Score threshold for moving events
 fl = cell(1,file_number);
 
+T(1:file_number) = struct('res',[],'SizeThr',[]);
+invadingEvents = zeros(1,file_number);
+evadingEvents = zeros(1,file_number);
+movingEvents = zeros(1,file_number);
+totalEvents = zeros(1,file_number);
+
 for n = 1:file_number
     
 [p,name,ext] = fileparts(paths{n});
 addpath(p)
 filename = strcat(name,ext);
 
-T(n) = load(filename);  % Data from all trials is stored here
+dummy = load(filename);
+T(n).res = dummy.res;  % Data from all trials is stored here
 
 filename = string(strsplit(filename,'_'));
 filename = strsplit(filename(2),'.');
@@ -27,16 +34,28 @@ invadingEvents(1,n) = numel(find(T(n).res.fts.region.landmarkDir.chgToward(:,1)>
 evadingEvents(1,n) = numel(find(T(n).res.fts.region.landmarkDir.chgAway(:,1)>thresh));
 movingEvents(1,n) = invadingEvents(n) + evadingEvents(n);
 totalEvents(1,n) = numel(T(n).res.fts.region.landmarkDir.chgAway);
+
+T(n).SizeThr = SizeThr(T(n).res,0);
 % Add here any other category
 
 rmpath(p)
 
+fprintf('File %i out of %i Loaded\n' , n , file_number);
 end
+clear dummy
+
+% figure %Plot for distribution of moving events (dir towards or away)
+% for k=1:file_number; [H , edges] = histcounts(T(k).res.fts.region.landmarkDir.chgToward(find(res.fts.basic.area>50)),100);...
+%         hold on; plot(edges(2:end-1) , H(2:end)); end; hold off;
+
+%% Plotting
 X = categorical({ 'Total' , 'Moving' , 'Invading' , 'Evading'});
 Y = [totalEvents; movingEvents; invadingEvents; evadingEvents];
 figure;
 bar(X,Y);
-legend(fl); title(T(1).res.opts.fileName); xlabel('Event Type');
+legend(fl,'Location','northwest'); title(T(1).res.opts.fileName);
+xlabel('Event Type'); ylabel('Number of Events');
+%title('Cell 3 - AQuA Post-Processing');
 
 % Any other parameter relevant to the comparison can be added below the
 %       "totalEvents(1,n) line. Make sure the path within the res structure

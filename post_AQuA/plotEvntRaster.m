@@ -47,16 +47,17 @@ lgEventsArea = area(area>evtSizeCutoff);
 smEventsDist = dist(area<=evtSizeCutoff);
 lgEventsDist = dist(area>evtSizeCutoff);
 
-timeCut = [1.5 5.5];
+timeCut = [0 1.5 5.5 8];
 figure
 subplot(2,1,1)
 histogram(smEventsTime,0:.5:16.5)
 [~,cutSmEdges] = histcounts(smEventsTime,0:.5:16.5);
 [~,minSmIn] = min(abs(cutSmEdges-timeCut(1)));
 [~,maxSmIn] = min(abs(cutSmEdges-timeCut(2)));
-targetSm = sum(double(smEventsTime>timeCut(1)).*double(smEventsTime<timeCut(2)));
-sizeSmRatio = targetSm/(numel(smEventsTime)-targetSm);
-xline(timeCut(1)); xline(timeCut(2));
+targetSm = sum(double(smEventsTime>timeCut(2)).*double(smEventsTime<timeCut(3)));
+outSm = sum(double(smEventsTime>timeCut(3)).*double(smEventsTime<timeCut(4)) + double(smEventsTime<timeCut(2)));
+sizeSmRatio = targetSm/outSm;
+xline(timeCut(2)); xline(timeCut(3));
 ylabel('# Events')
 xlabel('Time (sec)')
 title(['Event Area <',num2str(evtSizeCutoff)]) 
@@ -68,8 +69,9 @@ histogram(lgEventsTime,0:.5:16.5);
 [~,minLgIn] = min(abs(cutLgEdges-timeCut(1)));
 [~,maxLgIn] = min(abs(cutLgEdges-timeCut(2)));
 targetLg = sum(double(lgEventsTime>timeCut(1)).*double(lgEventsTime<timeCut(2)));
-sizeLgRatio = targetLg/(numel(lgEventsTime)-targetLg);
-xline(timeCut(1)); xline(timeCut(2));
+outLg = sum(double(lgEventsTime>timeCut(3)).*double(lgEventsTime<timeCut(4)) + double(lgEventsTime<timeCut(2)));
+sizeLgRatio = targetLg/outLg;
+xline(timeCut(2)); xline(timeCut(3));
 ylabel('# Events')
 title(['Event Area >',num2str(evtSizeCutoff)]) 
 % ylim([0 maxDist])

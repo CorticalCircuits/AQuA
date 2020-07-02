@@ -1,7 +1,7 @@
 tic
 %% Selecting Landmark and Invading Event Index (If running non batch here make sure to uncomment this section)
-% whicchLandmark = 1;
-% whichevt = 3;
+whicchLandmark = 1;
+whichevt = 3;
 % % figure;plot(res.ftsFilter.region.landmarkDir.chgTowardBefReach)
 
 %% Direction Score Threshold + mean image + soma border
@@ -21,7 +21,7 @@ A(1) = string(res.opts.fileName)
 A(2) = whichevt
 A(3) = (res.fts.basic.area(invadingEvents(whichevt))); %Area
 A(4) = (res.fts.loc.t1(invadingEvents(whichevt)) - res.fts.loc.t0(invadingEvents(whichevt))) % Frames
-A(5) = (res.fts.loc.t1(invadingEvents(whichevt)) - res.fts.loc.t0(invadingEvents(whichevt)))/(res.opts.frameRate)
+A(5) = (res.fts.loc.t1(invadingEvents(whichevt)) - res.fts.loc.t0(invadingEvents(whichevt)))*(res.opts.frameRate)
 A(6) = (res.fts.region.landmarkDir.chgToward(invadingEvents(whichevt)));
 A(7) = (res.fts.region.landmarkDir.chgAway(invadingEvents(whichevt)));
 for n = 1:1:(numel(A(:)))  
@@ -39,7 +39,7 @@ VidNombre = convertStringsToChars(vidname);
 %plot
 %v = VideoWriter(PostText(1)+"Event#:"+string((invadingEvents(whichevt)))+".avi");
 v = VideoWriter(VidNombre,'MPEG-4');
-v.FrameRate = 8;
+v.FrameRate = 1/res.opts.frameRate; %why 8 and not .25
 v.Quality = 100;
 open(v)
 %% Plot Creation
@@ -70,7 +70,8 @@ for whichEvt = whichevt%1:length(invadingEvents)
              text(.15,.15,PostText,'Color','w','Units','Normalized')
              hold on
              plot(somaBorder(:,2),somaBorder(:,1),'.')
-   M(ind) = getframe(fig)
+             ax = gca
+   M(ind) = getframe(ax)
    
     end
 

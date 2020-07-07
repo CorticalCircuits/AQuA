@@ -3,7 +3,7 @@ paths = uipickfiles;
 tic
 %% Selecting Landmark and Invading Event Index
 whicchLandmark = 1;%Set as Soma to define the direction scores
-whichevt = [1:5]; %Events to visualize, if want multiple for one mat file then put the array here of evt #
+whichevt = [1:10]; %Events to visualize, if want multiple for one mat file then put the array here of evt #
 forlooper = numel(whichevt)
 % %% Vid maker for loop set for multiple mat files
 % for n = 1:numel(paths)

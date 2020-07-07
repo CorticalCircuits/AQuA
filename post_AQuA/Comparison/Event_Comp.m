@@ -43,10 +43,13 @@ rmpath(p)
 fprintf('File %i out of %i Loaded\n' , n , file_number);
 end
 clear dummy
-
-% figure %Plot for distribution of moving events (dir towards or away)
-% for k=1:file_number; [H , edges] = histcounts(T(k).res.fts.region.landmarkDir.chgToward(find(res.fts.basic.area>50)),100);...
-%         hold on; plot(edges(2:end-1) , H(2:end)); end; hold off;
+%% More Plots?
+figure %Plot for distribution of moving events (dir towards or away)
+for k=1:file_number; [H , edges] = histcounts(T(k).res.fts.region.landmarkDir.chgToward(find(T(k).res.fts.basic.area>50)),100);...
+        hold on; plot(edges(2:end-1) , H(2:end)); end; hold off; title('Towards');
+figure %Plot for distribution of moving events (dir towards or away)
+for k=1:file_number; [H , edges] = histcounts(T(k).res.fts.region.landmarkDir.chgAway(find(T(k).res.fts.basic.area>50)),100);...
+        hold on; plot(edges(2:end-1) , H(2:end)); end; hold off; title('Away');
 
 %% Plotting
 X = categorical({ 'Total' , 'Moving' , 'Invading' , 'Evading'});

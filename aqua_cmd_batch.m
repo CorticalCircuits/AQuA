@@ -15,7 +15,7 @@ startup;  % initialize
 load('random_Seed.mat');
 rng(s);
 
-p0 = 'D:\'; %% tif folder
+p0 = 'C:\Users\tomsu\Documents\GitHub\AQuA Data\SuperBatch'; %% tif folder
 
 %% For cell boundary and landmark
 p_cell = '';   % cell boundary path, if you have
@@ -33,11 +33,14 @@ if(~strcmp(p_landmark,''))
     bd('landmk') = landmark.bd0;
 end
 
-files = dir(fullfile(p0,'*.tif'));  
+files = dir(fullfile(p0,'*.tif'));
+tempname = 'Tm_Cell12.mat';
+save(tempname);
 
 %% 
 for x = 1:size(files,1)
-
+    clearvars -except x tempname
+    load(tempname);
     f0 = files(x).name;  % file name
 
     %% Note: Setting the parameters should be consistent with your target file
@@ -60,7 +63,7 @@ for x = 1:size(files,1)
     end
     [dat,dF,~,lmLoc,opts,dL] = burst.actTop(datOrg,opts,evtSpatialMask);  % foreground and seed detection
     [svLst,~,riseX] = burst.spTop(dat,dF,lmLoc,evtSpatialMask,opts);  % super voxel detection
-
+    rmpath(genpath('C:\Users\tomsu\Documents\GitHub\AQuA\3D_AQuA'))
     [riseLst,datR,evtLst,seLst] = burst.evtTop(dat,dF,svLst,riseX,opts,[],bd);  % events
     [ftsLst,dffMat] = fea.getFeatureQuick(dat,evtLst,opts);
 
@@ -134,6 +137,7 @@ for x = 1:size(files,1)
             end
             if bd.isKey('landmk')
                 bd0 = bd('landmk');
+                lname = cell(1 , numel(lmkLst));
                 for i = 1:numel(lmkLst)
                     lname{i} = bd0{i}{4};
                     if(strcmp(lname{i},'None'))
@@ -284,7 +288,4 @@ for x = 1:size(files,1)
     res.bd = bd;
     save([path0,name,'_AQuA.mat'], 'res');
 end
-    
-
-
-
+delete(tempname);

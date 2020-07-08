@@ -26,11 +26,15 @@ if(~strcmp(p_landmark,''))
     bd('landmk') = landmark.bd0;
 end
 
-files = dir(fullfile(p0,'*.tif'));  
+files = dir(fullfile(p0,'*.tif'));
+tempname = 'Tm_Cell12.mat';
+save(tempname);
 
 %% 
 for x = 1:size(files,1)
-
+    
+    clearvars -except x tempname
+    load(tempname);
     f0 = files(x).name;  % file name
 
     %% Note: Setting the parameters should be consistent with your target file
@@ -273,7 +277,4 @@ for x = 1:size(files,1)
     res.bd = bd;
     save([path0,name,'_AQuA.mat'], 'res');
 end
-    
-
-
-
+delete(tempname);

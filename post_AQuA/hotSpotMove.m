@@ -1,5 +1,5 @@
 function hotSpotMove(res , savePath , saveName)
-
+%Save firstFrameMap and lastFrameMap in mat file
 firstFrameMap = zeros(size(res.datOrg,1), size(res.datOrg,2));
 lastFrameMap = zeros(size(res.datOrg,1), size(res.datOrg,2));
 
@@ -7,7 +7,8 @@ thresh = 250;
 % invadingEvents = find(res.ftsFilter.region.landmarkDir.chgTowardBefReach(:,2)>thresh);
 invadingEvents = find(res.fts.region.landmarkDir.chgToward(:,1)>thresh);
 evadingEvents = find(res.fts.region.landmarkDir.chgAway(:,1)>thresh);
-movingEvents = cat(1,invadingEvents,evadingEvents);
+movingNotUnique = cat(1,invadingEvents,evadingEvents);
+movingEvents = unique(movingNotUnique);
 
 for whichEvt = 1:length(movingEvents)
 
@@ -26,7 +27,7 @@ top = max(max(max(firstFrameMap)) , max(max(lastFrameMap)));
 
 if nargin >= 2; set(0,'DefaultFigureVisible','off'); end
 
-h(1) = figure('units','normalized','outerposition',[0 0 1 1]);
+h(1) = figure('units','normalized');
 ax(1) = subplot(1,9,1:4);
 imagesc(firstFrameMap); colormap(ax(1),hot); axis image;
 set(gca,'xtick',[]); set(gca,'ytick',[]);
@@ -39,7 +40,7 @@ title('HotSpot - Moving Death');
 caxis manual; caxis([bottom top]);
 colorbar('Position',[0.8510    0.19    0.0540    0.67]);
 
-h(2) = figure('units','normalized','outerposition',[0 0 1 1]);
+h(2) = figure('units','normalized');
 subplot(1,2,1);
 histogram(nonzeros(firstFrameMap),'BinMethod','integers');
 title('Moving Death'); xlim([bottom top]);
@@ -48,6 +49,7 @@ histogram(nonzeros(lastFrameMap),'BinMethod','integers');
 title('Moving Rise'); xlim([bottom top]);
 
 if nargin >= 2
+    [h.OuterPosition] = deal([0 0 1 1]);
     savefig(h , fullfile(savePath,[saveName,'_hsMove.fig']));
     saveas(h(1) , fullfile(savePath,[saveName,'_hsMove_Map.jpg']));
     saveas(h(2) , fullfile(savePath,[saveName,'_hsMove_Hist.jpg']));

@@ -48,6 +48,7 @@ if nargin >= 2
     saveas(h(1) , fullfile(savePath,[saveName,'_hsAll_Map.jpg']));
     saveas(h(2) , fullfile(savePath,[saveName,'_hsAll_Hist.jpg']));
     set(0,'DefaultFigureVisible','on');
+    save(fullfile(savePath,[saveName,'_hsAll_Var.mat']), 'firstFrameMap','lastFrameMap');
 end
 
 end

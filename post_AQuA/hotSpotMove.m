@@ -50,10 +50,11 @@ title('Moving Rise'); xlim([bottom top]);
 
 if nargin >= 2
     [h.OuterPosition] = deal([0 0 1 1]);
-    savefig(h , fullfile(savePath,[saveName,'_hsMove.fig']));
+    savefig(h , fullfile(savePath,[saveName,'_hsMove_Fig.fig']));
     saveas(h(1) , fullfile(savePath,[saveName,'_hsMove_Map.jpg']));
     saveas(h(2) , fullfile(savePath,[saveName,'_hsMove_Hist.jpg']));
     set(0,'DefaultFigureVisible','on');
+    save(fullfile(savePath,[saveName,'_hsMove_Var.mat']), 'firstFrameMap','lastFrameMap');
 end
 
 end

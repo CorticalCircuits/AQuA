@@ -16,14 +16,15 @@ somaBorder = res.fts.region.landMark.border{whicchLandmark};
 %Here below is the use of string in a pre than post process in order to
 %refrence the variables from AQUA and then print those feature values into
 %the movie that will be played
-PreText = {string(res.opts.fileName),"Event #: %.0f ","Area of Event: %.1f  mu^2", "Frames: %.0f " , "Time: %.1f s ", "Direction Score Towards: %.1f", "Direction Score Away: %.1f"};% Need to add mu ^2 to the area was having issues with the printing but this is a minor issue as we can just add a mu in text in the plot window
+PreText = {string(res.opts.fileName),"Event #: %.0f ","Area of Event: %.1f  mu^2", "Strat Frame: %.0f ", "End Frame: %.0f" , "Time: %.1f s ", "Direction Score Towards: %.1f", "Direction Score Away: %.1f"};% Need to add mu ^2 to the area was having issues with the printing but this is a minor issue as we can just add a mu in text in the plot window
 A(1) = string(res.opts.fileName)
 A(2) = whichevt
 A(3) = (res.fts.basic.area(whichevt)); %Area
-A(4) = (res.fts.loc.t1(whichevt) - res.fts.loc.t0(whichevt)) % Frames
-A(5) = (res.fts.loc.t1(whichevt) - res.fts.loc.t0(whichevt))*(res.opts.frameRate)
-A(6) = (res.fts.region.landmarkDir.chgToward(whichevt));
-A(7) = (res.fts.region.landmarkDir.chgAway(whichevt));
+A(4) = res.fts.loc.t0(whichevt) % Start Frames
+A(5) = res.fts.loc.t1(whichevt) % End Frames
+A(6) = (res.fts.loc.t1(whichevt) - res.fts.loc.t0(whichevt))*(res.opts.frameRate)
+A(7) = (res.fts.region.landmarkDir.chgToward(whichevt));
+A(8) = (res.fts.region.landmarkDir.chgAway(whichevt));
 for n = 1:1:(numel(A(:)))  
 charText{n} = sprintf(PreText{n},(A(n)));
 PostText = convertCharsToStrings(charText);

@@ -1,6 +1,6 @@
 %% Function Selection
 % Choose multiple .mat files to compare critical data
-clear T
+clear T; close all;
 
 paths = uipickfiles;
 Comp = 'on';        %Option for comparing number of events and AQuA parameters
@@ -39,7 +39,7 @@ end
 
 %% Function Calling and Use
 if strcmp(Comp , 'on') %Comparison function initiation
-    trialComp(T , names);
+    trialComp(T,names);
 end
 
 if strcmp(HotSpot , 'on') %HotSpot functions initiation

@@ -1,7 +1,6 @@
+function cell_Comp(T)
 %% Loading and Extraction
 % Choose multiple .mat files to compare critical data between them
-clear T
-
 paths = uipickfiles;
 file_number = numel(paths);
 thresh = 50;            % Score threshold for moving events
@@ -93,4 +92,6 @@ if exist('index','var')
     disp(Table);
 else
     disp('No difference in Parameters was Found');
+end
+
 end

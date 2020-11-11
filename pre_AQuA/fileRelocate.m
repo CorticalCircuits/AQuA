@@ -1,6 +1,6 @@
 %% Paths and File Names
 clearvars; clc;
-path1 = 'Z:\AQuA Data\Processed Data\Batches V1.1\cell5Crp'; %Path folder with AQuA output
+path1 = 'C:\Users\tomsu\Documents\GitHub\AQuA Data\AQuA Processed\cell9 Intensity Study'; %Path folder with AQuA output
 cd(path1);
 files = [dir('**/*.mat') , dir('**/*.tif') , dir('**/*.xlsx')]; %Find all files with mat, tif and xlsx extension
 

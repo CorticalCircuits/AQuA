@@ -61,7 +61,8 @@ if strcmp(HotSpot , 'on') %HotSpot functions initiation
 end
 
 if strcmp(SomaArea , 'on') %HotSpot functions initiation
+    ratio = zeros(numel(T) , 1);
     for n = 1:numel(T)
-        areaCompare(T(n).res , bd0 , imageSavePath , names{n});
+        ratio(n) = areaCompare(T(n).res , bd0 , imageSavePath , names{n});
     end
 end

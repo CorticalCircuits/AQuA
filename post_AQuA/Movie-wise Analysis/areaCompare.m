@@ -4,7 +4,7 @@ if ~exist('res','var') || ~exist('bd0','var')
     error('No res structure or landmark structure found. Load an AQuA mat file and a landmark file to begin');
 end
 oneEvent = true;
-if ~exist('whichevt','var')
+if ~isnumeric(whichevt)
     oneEvent = false;
     whichevt = 1:length(res.evt);
     coveredSomaArea = zeros(size(res.evt));
@@ -40,7 +40,7 @@ end
 %% Ratio Calculation
 % Ratio of yellow events (completely inside soma)smaller than 200um2 divided
 % by all events under 200um2
-if oneEvent
+if ~oneEvent
     significantEvents = all([insideSomaArea>90;res.fts.basic.area<200;coveredSomaArea>2]);
     ratio = sum(significantEvents)/sum(all([res.fts.basic.area<200;coveredSomaArea>2]));
 end

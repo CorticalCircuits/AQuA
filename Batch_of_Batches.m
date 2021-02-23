@@ -14,8 +14,16 @@ addpath(genpath(AQuA_path));
 % add the path for each folder with tiff movies, one folder per row
 paths = {'C:\Users\Coter027\Documents\CellsToProcess\Cell5'};
 
-% add landmark and cell boundaries for same cell in same row
-boundary = {'BoundMask-cell5_Cell.mat','BoundMask-cell5_LandMark.mat'};
+% add {cell,landmark} boundaries for same cell in same row in that order
+cellbound = {'BoundMask-cell5_Cell.mat','BoundMask-cell5_LandMark.mat';
+    'BoundMask-cell5_Cell.mat','BoundMask-cell5_LandMark.mat';
+    'BoundMask-cell5_Cell.mat','BoundMask-cell5_LandMark.mat';
+    'BoundMask-cell5_Cell.mat','BoundMask-cell5_LandMark.mat';
+    'BoundMask-cell5_Cell.mat','BoundMask-cell5_LandMark.mat';
+    'BoundMask-cell5_Cell.mat','BoundMask-cell5_LandMark.mat';
+    'BoundMask-cell5_Cell.mat','BoundMask-cell5_LandMark.mat';
+    'BoundMask-cell5_Cell.mat','BoundMask-cell5_LandMark.mat';
+    'BoundMask-cell5_Cell.mat','BoundMask-cell5_LandMark.mat'};
 
 for Trial = 1:length(paths)
     fprintf('############################### Batch Number %i ############################### \n', Trial);

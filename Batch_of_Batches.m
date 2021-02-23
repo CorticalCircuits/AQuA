@@ -12,14 +12,10 @@ addpath(genpath(AQuA_path));
 % All folders need to have the same number of copies of the file
 
 % add the path for each folder with tiff movies, one folder per row
-paths = {'C:\Users\tomsu\Documents\GitHub\AQuA Data\BatchTest' ; ...
-    'C:\Users\tomsu\Documents\GitHub\AQuA Data\SuperBatch'};
+paths = {'C:\Users\Coter027\Documents\CellsToProcess\Cell5'};
 
 % add landmark and cell boundaries for same cell in same row
-boundary = {'TSeries-07062015-1048_EpOri(12sec)_site1_9X_4Hz_Astro1_0.8ISO_v3-000_ALGoodTrials_Cell.mat' , ...
-    'TSeries-07062015-1048_EpOri(12sec)_site1_9X_4Hz_Astro1_0.8ISO_v3-000_ALGoodTrialsLandMark.mat' ; ...
-    'TSeries-07062015-1048_EpOri(12sec)_site1_9X_4Hz_Astro1_0.8ISO_v3-000_ALGoodTrials_Cell.mat' , ...
-    'TSeries-07062015-1048_EpOri(12sec)_site1_9X_4Hz_Astro1_0.8ISO_v3-000_ALGoodTrials_Cell.mat'};
+boundary = {'BoundMask-cell5_Cell.mat','BoundMask-cell5_LandMark.mat'};
 
 for Trial = 1:length(paths)
     fprintf('############################### Batch Number %i ############################### \n', Trial);

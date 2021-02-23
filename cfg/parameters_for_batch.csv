@@ -1,14 +1,14 @@
 Name,Variable,Type,File1,File2,File3,File4,File5,File6,File7,File8,File9
 Minimum size,minSize,prep,32,32,32,32,32,32,32,32,32
 Spatial smoothing level,smoXY,prep,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-Active voxels threshold scale,thrARScl,prep,2,2,2,2.5,2.5,2.5,3,3,3
+Active voxels threshold scale,thrARScl,prep,3,3,3,3,3,3,3,3,3
 Temporal cut threshold scale,thrTWScl,prep,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 Seed growing threshold,thrExtZ,prep,1,1,1,1,1,1,1,1,1
 Slowest propgation,cDelay,event,1,1,1,1,1,1,1,1,1
 Rising phase uncertainty,cRise,event,2,2,2,2,2,2,2,2,2
 GTW smoothness term,gtwSmo,event,0.5,2,4,0.5,2,4,0.5,2,4
 GTW windows size,maxStp,event,11,11,11,11,11,11,11,11,11
-Z score threshold for events,zThr,post,2,2,2,2,2,2,2,2,2
+Z score threshold for events,zThr,post,3,3,3,4,4,4,5,5,5
 Ignore merging step,ignoreMerge,post,1,1,1,1,1,1,1,1,1
 Maximum merging distance,mergeEventDiscon,post,0,0,0,0,0,0,0,0,0
 Minimum merging correlation,mergeEventCorr,post,0,0,0,0,0,0,0,0,0
@@ -38,7 +38,7 @@ Propagation threshold minimum,propthrmin,post,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.
 Propagation threshold step,propthrstep,post,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1
 Propagation threshold maximum,propthrmax,post,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8
 ,,,,,,,,,,,
-Frame rate,frameRate,prep,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25
+Frame rate,frameRate,prep,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 Spatial resolution,spatialRes,prep,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3
 Estimated noise variance,varEst,prep,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02
 Foreground threshold,fgFluo,prep,0,0,0,0,0,0,0,0,0

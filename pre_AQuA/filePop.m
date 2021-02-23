@@ -1,9 +1,9 @@
 %% Paths and File Names
 clearvars; clc;
-file2copy = 'cell15Crp.tif'; %Name of target file (with extension)
-path1 = 'Z:\AQuA Data\Raw Data\Cropped Stacks'; %Path to the file
+file2copy = 'TSeries-02232015-1157_Site3_1.0ISO_Astro1-005_AL_SMmskGoodTrials.tif'; %Name of target file (with extension)
+path1 = 'Z:\AQuA Data\Raw Data\Cropped Stacks\GoodTrialsNEW'; %Path to the file
 [~ , name , ext] = fileparts(file2copy);
-path2 = 'Z:\AQuA Data\Raw Data\Cropped Stacks\c15Cr'; %Target path where the file will be copied
+path2 = 'C:\Users\Coter027\Documents\CellsToProcess\Cell5'; %Target path where the file will be copied
 
 %% Generation of Directory
 if ~isfolder(path2)

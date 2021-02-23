@@ -9,7 +9,7 @@ p0 = paths{Trial,1}; %% tif folder
 
 %% For cell boundary and landmark
 
-if ~exist('boundary','var')
+if exist('boundary')
     p_cell = boundary{Trial,1};   % cell boundary path, if you have
     p_landmark = boundary{Trial,2};   % landmark path, if you have
 end

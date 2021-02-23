@@ -15,11 +15,11 @@ startup;  % initialize
 load('random_Seed.mat');
 rng(s);
 
-p0 = 'C:\Users\tomsu\Documents\GitHub\AQuA Data\SuperBatch'; %% tif folder
+p0 = 'X:\AQuA Data\Raw Data\Cropped Stacks\cell5Crp'; %% tif folder
 
 %% For cell boundary and landmark
-p_cell = '';   % cell boundary path, if you have
-p_landmark = '';   % landmark path, if you have
+p_cell = 'BoundMask-cell5_Cell.mat';   % cell boundary path, if you have
+p_landmark = 'BoundMask-cell5_LandMark.mat';   % landmark path, if you have
 
 bd = containers.Map;
 bd('None') = [];

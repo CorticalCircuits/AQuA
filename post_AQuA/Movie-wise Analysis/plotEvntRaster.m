@@ -7,7 +7,7 @@ if ~exist('cell_stim_db','var')
     end
 end
 
-cellName = 'cell3';
+cellName = 'cell9';
 expNum = sscanf(cellName,'cell%i');
 
 cycleLength = cell_stim_db(expNum).stim.cycleLength;

@@ -3,6 +3,9 @@ function ratio = areaCompare(res , bd0 , whichevt , savePath , saveName)
 if ~exist('res','var') || ~exist('bd0','var')
     error('No res structure or landmark structure found. Load an AQuA mat file and a landmark file to begin');
 end
+
+if nargin >= 2; set(0,'DefaultFigureVisible','off'); end
+
 oneEvent = true;
 if ~isnumeric(whichevt)
     oneEvent = false;
@@ -83,5 +86,6 @@ else %Display chart with colors and calculate ratio
     savefig(fig , fullfile(savePath,[saveName,'_SomaArea.fig']));
     saveas(fig , fullfile(savePath,[saveName,'_SomaArea.jpg']));
    end
-end    
+end
+set(0,'DefaultFigureVisible','on');
 end

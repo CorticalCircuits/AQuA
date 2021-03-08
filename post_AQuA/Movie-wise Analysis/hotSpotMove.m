@@ -56,5 +56,5 @@ if nargin >= 2
     set(0,'DefaultFigureVisible','on');
     save(fullfile(savePath,[saveName,'_hsMove_Var.mat']), 'firstFrameMap','lastFrameMap');
 end
-
+set(0,'DefaultFigureVisible','on');
 end

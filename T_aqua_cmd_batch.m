@@ -10,8 +10,8 @@ p0 = paths{Trial,1}; %% tif folder
 %% For cell boundary and landmark
 
 if exist('cellbound')
-    p_cell = cellbound{Trial,1};   % cell boundary path, if you have
-    p_landmark = cellbound{Trial,2};   % landmark path, if you have
+    p_cell = append('X:\AQuA Data\Raw Data\Cropped Stacks\New Landmarks\',cellbound{Trial,1});   % cell boundary path, if you have
+    p_landmark = append('X:\AQuA Data\Raw Data\Cropped Stacks\New Landmarks\',cellbound{Trial,2});   % landmark path, if you have
 end
 
 bd = containers.Map;

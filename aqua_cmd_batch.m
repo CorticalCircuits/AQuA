@@ -15,11 +15,11 @@ startup;  % initialize
 load('random_Seed.mat');
 rng(s);
 
-p0 = 'C:\Users\Coter027\Documents\CellsToProcess\Cell6'; %% tif folder
+p0 = 'C:\Users\Coter027\Documents\CellsToProcess\Cell5'; %% tif folder
 
 %% For cell boundary and landmark
-p_cell = 'BoundMask-cell6_Cell.mat';   % cell boundary path, if you have
-p_landmark = 'BoundMask-cell6e_LandMark.mat';   % landmark path, if you have
+p_cell = 'X:\AQuA Data\Raw Data\Cropped Stacks\New Landmarks\BoundMask-cell5_Cell.mat';   % cell boundary path, if you have
+p_landmark = 'X:\AQuA Data\Raw Data\Cropped Stacks\New Landmarks\BoundMask-cell5_Landmark.mat';   % landmark path, if you have
 
 bd = containers.Map;
 bd('None') = [];

@@ -1,7 +1,7 @@
 Name,Variable,Type,File1,File2,File3,File4,File5
 Minimum size,minSize,prep,32,32,32,32,32
 Spatial smoothing level,smoXY,prep,0.5,0.5,0.5,0.5,0.5
-Active voxels threshold scale,thrARScl,prep,3,3,3,3,3
+Active voxels threshold scale,thrARScl,prep,2,3,3.5,4,5
 Temporal cut threshold scale,thrTWScl,prep,2,3,4,5,6
 Seed growing threshold,thrExtZ,prep,1,1,1,1,1
 Slowest propgation,cDelay,event,1,1,1,1,1

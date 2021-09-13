@@ -44,8 +44,8 @@ end
 % Ratio of yellow events (completely inside soma)smaller than 200um2 divided
 % by all events under 200um2
 if ~oneEvent
-    significantEvents = all([insideSomaArea>90;res.fts.basic.area<200;coveredSomaArea>2]);
-    ratio = sum(significantEvents)/sum(all([res.fts.basic.area<200;coveredSomaArea>2]));
+    significantEvents = all([insideSomaArea>90;res.fts.basic.area<50;coveredSomaArea>2]);
+    ratio = sum(significantEvents)/sum(all([res.fts.basic.area<50;coveredSomaArea>2]));
 end
 
 %% Figure Display

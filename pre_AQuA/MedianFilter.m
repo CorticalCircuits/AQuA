@@ -5,7 +5,7 @@ paths = uipickfiles;
 if isnumeric(paths)
     error('No file Selected');
 end
-addpath(genpath('C:\Users\carlo\Research'))
+addpath(genpath('C:\Users\coter027\Documents\CellsToProcess\Cell11'))
 %% Getting Savename of the file
 for x = 1:numel(paths)
 name = char(paths);

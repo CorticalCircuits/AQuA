@@ -27,18 +27,16 @@ if(~strcmp(p_landmark,''))
 end
 
 files = dir(fullfile(p0,'*.tif'));
-tempname = 'Tm_Cell12.mat';
-save(tempname);
 
 %% 
-for x = 1:size(files,1)
+for n = 1:size(files,1)
     
-    clearvars -except x tempname
-    load(tempname);
-    f0 = files(x).name;  % file name
+    f0 = files(n).name;  % file name
 
     %% Note: Setting the parameters should be consistent with your target file
-    opts = util.parseParam_for_batch(x,0);
+    opts = util.parseParam_for_batch(n,0);
+    opts.spatialRes = SpatialRes(Trial);
+    opts.frameRate = FrameRate(Trial);
     [datOrg,opts] = burst.prep1(p0,f0,[],opts);  % read data
     [folder, name, ext] = fileparts(strcat(p0,'\',f0));
 
@@ -277,4 +275,3 @@ for x = 1:size(files,1)
     res.bd = bd;
     save([path0,name,'_AQuA.mat'], 'res');
 end
-delete(tempname);

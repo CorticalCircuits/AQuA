@@ -10,6 +10,7 @@ evtMap(evtXYpix) = 1;
 totalmap = totalmap + evtMap;
 evtMap = zeros(picsize(1),picsize(2));
 end
+if nargin >= 2; set(0,'DefaultFigureVisible','off'); end
 bottom = min(min(totalmap))
 top = max(max(totalmap))
 h(1) = figure('units','normalized');

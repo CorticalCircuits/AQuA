@@ -42,8 +42,8 @@ end
 % Ratio of events (completely inside soma)smaller than 50um2 divided
 % by all events under 50um2 
 if ~oneEvent
-    significantEvents = all([areacovered==100;res.fts.basic.area<50;somacovered>10]);
-    ratio = sum(significantEvents)/sum(all([res.fts.basic.area<50;somacovered>10]));
+    significantEvents = all([areacovered==100;res.fts.basic.area<50;somacovered>1]);
+    ratio = sum(significantEvents)/sum(all([res.fts.basic.area<50;somacovered>1]));
 end
 
 %% Figure Display

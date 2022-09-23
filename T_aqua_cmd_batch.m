@@ -37,6 +37,14 @@ for n = 1:size(files,1)
     opts = util.parseParam_for_batch(n,0);
     opts.spatialRes = SpatialRes(Trial);
     opts.frameRate = FrameRate(Trial);
+    opts.minSize = minSizee(Trial);
+    if FrameRate(Trial) == .25
+    opts.cRise = 2;
+    opts.cDelay = 2;
+    elseif FrameRate(Trial) == .5
+    opts.cRise = 1;
+    opts.cDelay = 1;
+    end
     [datOrg,opts] = burst.prep1(p0,f0,[],opts);  % read data
     [folder, name, ext] = fileparts(strcat(p0,'\',f0));
 
